@@ -15,7 +15,7 @@ ARG build_type=release
 # Base Image
 ###############################################################################
 
-FROM centos7-base as base
+FROM centos7-build-base as base
 
 ARG gcc
 ARG qt_major
@@ -96,9 +96,9 @@ RUN yum -y install \
     do echo "-- Apply $(basename ${patch})." \
  &&    patch -d ${qt_string}-${qt_version} -p1 -i ${patch}; \
     done \
- && echo "done"
-
-RUN source scl_source enable devtoolset-8 \
+ && echo "done" \
+ \
+ && source scl_source enable devtoolset-8 \
  && mkdir build \
  && cd build \
  && ../${qt_string}-${qt_version}/configure \
@@ -164,7 +164,7 @@ RUN source scl_source enable devtoolset-8 \
       -skip qtvirtualkeyboard \
       -skip qtwayland \
       -skip qtwebsockets \
-      -skip qtwinextras
+      -skip qtwinextras \
 # Not skipping: qtbase
 #               qtdeclarative
 #               qtdoc
@@ -189,8 +189,8 @@ RUN source scl_source enable devtoolset-8 \
 # Final Image
 ###############################################################################
 
-# FROM base
+FROM base
 
-# ARG qt_prefix
+ARG qt_prefix
 
-# COPY --from=builder ${qt_prefix} ${qt_prefix}
+COPY --from=builder ${qt_prefix} ${qt_prefix}
