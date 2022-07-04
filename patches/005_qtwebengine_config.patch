@@ -1,47 +1,4 @@
 Submodule qtwebengine 56e97848..29dcabe2:
-diff --git a/qtwebengine/configure.pri b/qtwebengine/configure.pri
-index 897bea540..d5007deef 100644
---- a/qtwebengine/configure.pri
-+++ b/qtwebengine/configure.pri
-@@ -87,18 +87,7 @@ defineTest(qtConfTest_detectFlex) {
- defineTest(qtConfTest_detectGlibc) {
-     ldd = $$qtConfFindInPath("ldd")
-     !isEmpty(ldd) {
--        qtLog("Found ldd from path: $$ldd")
--        qtRunLoggedCommand("$$ldd --version", version)|return(true)
--        version ~= 's/^.*[^0-9]\([0-9]*\.[0-9]*\).*$/\1/'
--        version = $$first(version)
--        qtLog("Found libc version: $$version")
--        version = $$split(version,'.')
--        version = $$member(version, 1)
--        greaterThan(version, 16) {
--            return(true)
--        }
--        qtLog("Detected too old version of glibc. Required min 2.17.")
--        return(false)
-+        return(true)
-     }
-     qtLog("No ldd found. Assuming right version of glibc.")
-     return(true)
-@@ -109,7 +98,7 @@ defineTest(qtConfTest_detectNinja) {
-     !isEmpty(ninja) {
-         qtLog("Found ninja from path: $$ninja")
-         qtRunLoggedCommand("$$ninja --version", version)|return(false)
--        contains(version, "1.[7-9].*"): return(true)
-+        contains(version, ".*"): return(true)
-         qtLog("Ninja version too old")
-     }
-     qtLog("Building own ninja")
-@@ -131,8 +120,7 @@ defineTest(qtConfTest_detectGn) {
-     !isEmpty(gn) {
-         qtRunLoggedCommand("$$gn --version", version)|return(false)
-         #accept all for now
--        contains(version, ".*"): return(true)
--        qtLog("Gn version too old")
-+        return(true)
-     }
-     qtLog("Building own gn")
-     return(false)
 diff --git a/qtwebengine/src/core/api/core_api.pro b/qtwebengine/src/core/api/core_api.pro
 index 4b69b348a..006d9acf8 100644
 --- a/qtwebengine/src/core/api/core_api.pro
@@ -60,16 +17,3 @@ index 4b69b348a..006d9acf8 100644
  msvc {
      # Create a list of object files that can be used as response file for the linker.
      # This is done to simulate -whole-archive on MSVC.
-diff --git a/qtwebengine/src/core/configure.json b/qtwebengine/src/core/configure.json
-index b9c920444..334b09e7e 100644
---- a/qtwebengine/src/core/configure.json
-+++ b/qtwebengine/src/core/configure.json
-@@ -611,7 +611,7 @@
-         },
-         "webengine-system-gn": {
-             "label": "Use System Gn",
--            "autoDetect": false,
-+            "autoDetect": true,
-             "condition": "tests.webengine-gn",
-             "output": [ "privateFeature" ]
-         },
