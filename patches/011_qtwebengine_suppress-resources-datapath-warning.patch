@@ -1,0 +1,21 @@
+Submodule qtwebengine b08bb314..5597702d:
+diff --git a/qtwebengine/src/core/web_engine_library_info.cpp b/qtwebengine/src/core/web_engine_library_info.cpp
+index 7e31c3d74..31d98d942 100644
+--- a/qtwebengine/src/core/web_engine_library_info.cpp
++++ b/qtwebengine/src/core/web_engine_library_info.cpp
+@@ -291,15 +291,12 @@ QString resourcesDataPath()
+     if (!initialized) {
+         initialized = true;
+         if (!QFileInfo::exists(potentialResourcesPath % QLatin1String("/qtwebengine_resources.pak"))) {
+-            qWarning("Qt WebEngine resources not found at %s. Trying parent directory...", qPrintable(potentialResourcesPath));
+             potentialResourcesPath = QLibraryInfo::location(QLibraryInfo::DataPath);
+         }
+         if (!QFileInfo::exists(potentialResourcesPath % QLatin1String("/qtwebengine_resources.pak"))) {
+-            qWarning("Qt WebEngine resources not found at %s. Trying application directory...", qPrintable(potentialResourcesPath));
+             potentialResourcesPath = QCoreApplication::applicationDirPath();
+         }
+         if (!QFileInfo::exists(potentialResourcesPath % QLatin1String("/qtwebengine_resources.pak"))) {
+-            qWarning("Qt WebEngine resources not found at %s. Trying fallback directory... The application MAY NOT work.", qPrintable(potentialResourcesPath));
+             potentialResourcesPath = fallbackDir();
+         }
+     }

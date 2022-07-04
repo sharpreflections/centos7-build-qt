@@ -1,0 +1,17 @@
+Submodule qtwebengine 7257a075..b08bb314:
+diff --git a/qtwebengine/src/core/web_engine_library_info.cpp b/qtwebengine/src/core/web_engine_library_info.cpp
+index 908662906..7e31c3d74 100644
+--- a/qtwebengine/src/core/web_engine_library_info.cpp
++++ b/qtwebengine/src/core/web_engine_library_info.cpp
+@@ -196,11 +196,9 @@ QString localesPath()
+     if (!initialized) {
+         initialized = true;
+         if (!QFileInfo::exists(potentialLocalesPath)) {
+-            qWarning("Installed Qt WebEngine locales directory not found at location %s. Trying application directory...", qPrintable(potentialLocalesPath));
+             potentialLocalesPath = QCoreApplication::applicationDirPath() % QDir::separator() % QLatin1String("qtwebengine_locales");
+         }
+         if (!QFileInfo::exists(potentialLocalesPath)) {
+-            qWarning("Qt WebEngine locales directory not found at location %s. Trying fallback directory... Translations MAY NOT not be correct.", qPrintable(potentialLocalesPath));
+             potentialLocalesPath = fallbackDir();
+         }
+     }

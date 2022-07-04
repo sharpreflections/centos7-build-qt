@@ -1,0 +1,22 @@
+Submodule qtwebengine 29dcabe2..6ced92b8:
+diff --git a/qtwebengine/mkspecs/features/gn_generator.prf b/qtwebengine/mkspecs/features/gn_generator.prf
+index c1399a453..d1fc50458 100644
+--- a/qtwebengine/mkspecs/features/gn_generator.prf
++++ b/qtwebengine/mkspecs/features/gn_generator.prf
+@@ -149,13 +149,9 @@ GN_CONTENTS += "    \"$$QMAKESPEC\""
+ GN_CONTENTS += "  ]"
+ 
+ GN_CONTENTS += "  ldflags = ["
+-for (flag, QMAKE_LFLAGS): GN_CONTENTS += "    \"$$filter_flag_values($$flag)\","
+-for (flag, GN_FLAGS): GN_CONTENTS += "    \"$$flag\","
+-!isEmpty(QMAKE_RPATHDIR) {
+-    for (rpath, QMAKE_RPATHDIR) {
+-        unix:!macos: GN_CONTENTS += "    \"-Wl,-rpath=$${rpath}\","
+-    }
+-}
++GN_CONTENTS += "    \"-Wl,-rpath=$$ORIGIN\","
++GN_CONTENTS += "    \"-Wl,-rpath=$$ORIGIN/../\","
++
+ !isEmpty(QMAKE_RPATHLINKDIR): GN_CONTENTS += "    \"-Wl,-rpath-link=$${QMAKE_RPATHLINKDIR}\","
+ GN_CONTENTS += "  ]"
+ 

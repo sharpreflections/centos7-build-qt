@@ -1,0 +1,21 @@
+Submodule qtwebengine 33ead218..7257a075:
+diff --git a/qtwebengine/src/core/web_engine_library_info.cpp b/qtwebengine/src/core/web_engine_library_info.cpp
+index 75fd947a2..908662906 100644
+--- a/qtwebengine/src/core/web_engine_library_info.cpp
++++ b/qtwebengine/src/core/web_engine_library_info.cpp
+@@ -268,15 +268,12 @@ QString icuDataPath()
+     if (!initialized) {
+         initialized = true;
+         if (!QFileInfo::exists(potentialResourcesPath % QLatin1String("/icudtl.dat"))) {
+-            qWarning("Qt WebEngine ICU data not found at %s. Trying parent directory...", qPrintable(potentialResourcesPath));
+             potentialResourcesPath = QLibraryInfo::location(QLibraryInfo::DataPath);
+         }
+         if (!QFileInfo::exists(potentialResourcesPath % QLatin1String("/icudtl.dat"))) {
+-            qWarning("Qt WebEngine ICU data not found at %s. Trying application directory...", qPrintable(potentialResourcesPath));
+             potentialResourcesPath = QCoreApplication::applicationDirPath();
+         }
+         if (!QFileInfo::exists(potentialResourcesPath % QLatin1String("/icudtl.dat"))) {
+-            qWarning("Qt WebEngine ICU data not found at %s. Trying fallback directory... The application MAY NOT work.", qPrintable(potentialResourcesPath));
+             potentialResourcesPath = fallbackDir();
+         }
+     }
