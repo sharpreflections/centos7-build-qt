@@ -15,7 +15,7 @@ ARG build_type=release
 # Base Image
 ###############################################################################
 
-FROM centos7-build-base as base
+FROM centos:centos7 as base
 
 ARG gcc
 ARG qt_major
@@ -30,7 +30,7 @@ ARG build_type
 # Builder Image
 ###############################################################################
 
-FROM base as builder
+FROM centos7-build-base as builder
 
 ARG gcc
 ARG qt_major
