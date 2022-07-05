@@ -43,8 +43,6 @@ ARG build_type
 
 ARG qt_version=${qt_major}${qt_minor}
 
-WORKDIR /build/
-
 COPY patches /build/patches/
 
 ENV CC=gcc \
