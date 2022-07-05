@@ -80,14 +80,14 @@ RUN yum -y install \
  && curl --remote-name --location --silent \
       http://download.qt.io/official_releases/qt/${qt_major}/${qt_version}/single/md5sums.txt \
  \
- && echo "Verifying file.." \
+ && echo -n "Verifying file.. " \
  && sed --in-place '/.*\.zip/d' md5sums.txt \
  && md5sum --quiet --check md5sums.txt \
- && echo " done" \
+ && echo "done" \
  \
- && echo -n "Extracting Qt5 ${qt_version}" \
+ && echo -n "Extracting Qt5 ${qt_version} " \
  && tar -xf ${qt_string}-${qt_version}.tar.xz \
- && echo " done" \
+ && echo "done" \
  \
  && echo "Patch Qt5 ${qt_version}:" \
  && for patch in $(find "$(pwd)/patches/" -type f | sort -n); \
