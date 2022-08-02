@@ -15,7 +15,7 @@ ARG build_type=release
 # Base Image
 ###############################################################################
 
-FROM centos:centos7 as base
+FROM quay.io/centos/centos:centos7 as base
 
 ARG gcc
 ARG qt_major
@@ -30,7 +30,7 @@ ARG build_type
 # Builder Image
 ###############################################################################
 
-FROM centos7-build-base as builder
+FROM quay.io/sharpreflections/centos7-build-base as builder
 
 ARG gcc
 ARG qt_major
