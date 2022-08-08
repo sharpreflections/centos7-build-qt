@@ -4,7 +4,7 @@
 
 ARG gcc=gcc-8.3.1
 ARG qt_major=5.12
-ARG qt_minor=.0
+ARG qt_minor=.12
 ARG qt_string=qt-everywhere-src
 ARG prefix=/opt
 ARG suffix=${gcc}
@@ -63,7 +63,7 @@ RUN yum -y install \
       dbus-devel \
       libXcomposite-devel \
       libXcursor-devel \
-      # libxkbcommon-devel \
+      libxkbcommon-devel \
       libXi-devel \
       libXrandr-devel \
       libXtst-devel \
