@@ -119,7 +119,6 @@ RUN yum -y install \
       -qt-libjpeg \
       -qt-libpng \
       -qt-xcb \
-      -qt-xkbcommon-x11 \
       -nomake examples \
       -nomake tests \
       -no-sse4.1 \
