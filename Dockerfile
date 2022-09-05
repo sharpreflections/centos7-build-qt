@@ -64,6 +64,7 @@ RUN yum -y install \
       libXcomposite-devel \
       libXcursor-devel \
       libxkbcommon-devel \
+      libxkbcommon-x11-devel \
       libXi-devel \
       libXrandr-devel \
       libXtst-devel \
