@@ -74,12 +74,13 @@ RUN yum -y install \
       nss-devel \
       devtoolset-8 \
       patch \
+      xorg-x11-apps \      
  \
  && echo "Downloading Qt5 ${qt_version}:" \
  && curl --remote-name --location --progress-bar \
-      http://download.qt.io/official_releases/qt/${qt_major}/${qt_version}/single/${qt_string}-${qt_version}.tar.xz \
+      http://download.qt.io/archive/qt/${qt_major}/${qt_version}/single/${qt_string}-${qt_version}.tar.xz \
  && curl --remote-name --location --silent \
-      http://download.qt.io/official_releases/qt/${qt_major}/${qt_version}/single/md5sums.txt \
+      http://download.qt.io/archive/qt/${qt_major}/${qt_version}/single/md5sums.txt \
  \
  && echo -n "Verifying file.. " \
  && sed --in-place '/.*\.zip/d' md5sums.txt \
@@ -96,7 +97,6 @@ RUN yum -y install \
  &&    patch -d ${qt_string}-${qt_version} -p1 -i ${patch}; \
     done \
  && echo "done" \
- \
  && source scl_source enable devtoolset-8 \
  && mkdir build \
  && cd build \
@@ -162,26 +162,26 @@ RUN yum -y install \
       -skip qtvirtualkeyboard \
       -skip qtwayland \
       -skip qtwebsockets \
-      -skip qtwinextras \
-# Not skipping: qtbase
-#               qtdeclarative
-#               qtdoc
-#               qtimageformats
-#               qtquickcontrols  # required by qtwebengine
-#               qtquickcontrols2
-#               qtremoteobjects
-#               qtscxml
-#               qtscript
-#               qtsvg
-#               qttools
-#               qtwebchannel     # required by qtwebengine
-#               qtwebengine
-#               qtwebview
-#               qtx11extras
-#               qtxmlpatterns
- \
- && make --jobs=$(nproc) \
- && make install
+      -skip qtwinextras \ 
+# # Not skipping: qtbase
+# #               qtdeclarative
+# #               qtdoc
+# #               qtimageformats
+# #               qtquickcontrols  # required by qtwebengine
+# #               qtquickcontrols2
+# #               qtremoteobjects
+# #               qtscxml
+# #               qtscript
+# #               qtsvg
+# #               qttools
+# #               qtwebchannel     # required by qtwebengine
+# #               qtwebengine
+# #               qtwebview
+# #               qtx11extras
+# #               qtxmlpatterns
+#  \
+   && make --jobs=$(nproc) \
+   && make install
 
 ###############################################################################
 # Final Image
