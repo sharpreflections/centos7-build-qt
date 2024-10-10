@@ -3,7 +3,7 @@ diff --git a/qtbase/mkspecs/features/qt.prf b/qtbase/mkspecs/features/qt.prf
 index 89f4946c50..3edf890da0 100644
 --- a/qtbase/mkspecs/features/qt.prf
 +++ b/qtbase/mkspecs/features/qt.prf
-@@ -280,17 +280,6 @@ for(ever) {
+@@ -244,17 +244,6 @@ for(ever) {
      message("This is not a bug, but a result of using Qt internals. You have been warned!")
  }
 

@@ -3,10 +3,10 @@ diff --git a/qtbase/mkspecs/features/qt_module.prf b/qtbase/mkspecs/features/qt_
 index ee7de22059..6bd7e36d9b 100644
 --- a/qtbase/mkspecs/features/qt_module.prf
 +++ b/qtbase/mkspecs/features/qt_module.prf
-@@ -210,54 +210,6 @@ equals(QT_ARCH, i386):contains(QT_CPU_FEATURES.$$QT_ARCH, sse2):compiler_support
-
+@@ -215,54 +215,6 @@ equals(QT_ARCH, i386):contains(QT_CPU_FEATURES.$$QT_ARCH, sse2):compiler_support
+ 
  android: CONFIG += qt_android_deps no_linker_version_script
-
+ 
 -!header_module:unix:!isEmpty(QMAKE_LFLAGS_VERSION_SCRIPT):!no_linker_version_script:!static {
 -    verscript = $${TARGET}.version
 -    QMAKE_LFLAGS += $${QMAKE_LFLAGS_VERSION_SCRIPT}$$verscript
@@ -57,7 +57,7 @@ index ee7de22059..6bd7e36d9b 100644
 -
  #install directives
  load(qt_installs)
-
+ 
 diff --git a/qtbase/src/corelib/global/qversiontagging.cpp b/qtbase/src/corelib/global/qversiontagging.cpp
 index b5e524bf4c..2678c57fb5 100644
 --- a/qtbase/src/corelib/global/qversiontagging.cpp
@@ -65,7 +65,7 @@ index b5e524bf4c..2678c57fb5 100644
 @@ -52,6 +52,7 @@
  #endif
  #define make_versioned_symbol(sym, m, n, separator)    make_versioned_symbol2(sym, m, n, separator)
-
+ 
 +/*
  extern "C" {
  #if QT_VERSION_MINOR > 0
@@ -82,11 +82,11 @@ index 75c2e9df7e..533a8e074a 100644
 @@ -81,9 +81,11 @@ QT_BEGIN_NAMESPACE
  #  endif
  #endif
-
+ 
 +/*
  #if defined(QT_VERSION_TAG)
  QT_VERSION_TAG(qt_version_tag);
  #endif
 +*/
-
+ 
  QT_END_NAMESPACE

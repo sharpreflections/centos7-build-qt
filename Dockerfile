@@ -15,7 +15,7 @@ ARG build_type=release
 # Base Image
 ###############################################################################
 
-FROM quay.io/centos/centos:centos7 as base
+FROM quay.io/centos/centos:centos7 AS base
 
 ARG gcc
 ARG qt_major
@@ -30,7 +30,7 @@ ARG build_type
 # Builder Image
 ###############################################################################
 
-FROM quay.io/sharpreflections/centos7-build-base as builder
+FROM centos7-build-base-patched AS builder
 
 ARG gcc
 ARG qt_major
@@ -49,39 +49,39 @@ ENV CC=gcc \
     CXX=g++
 
 RUN yum -y install \
-      python \
-      binutils \
-      xz \
-      glibc-devel \
-      bison \
-      flex \
-      make \
-      mesa-libGL-devel \
-      mesa-libEGL-devel \
-      openssl-devel \
-      fontconfig-devel \
-      dbus-devel \
-      libXcomposite-devel \
-      libXcursor-devel \
-      libxkbcommon-devel \
-      libxkbcommon-x11-devel \
-      libXi-devel \
-      libXrandr-devel \
-      libXtst-devel \
-      gperf \
-      expat-devel \
-      xkeyboard-config \
-      nss-devel \
-      devtoolset-8 \
-      patch \
-      xorg-x11-apps \      
- \
- && echo "Downloading Qt5 ${qt_version}:" \
- && curl --remote-name --location --progress-bar \
-      http://download.qt.io/archive/qt/${qt_major}/${qt_version}/single/${qt_string}-${qt_version}.tar.xz \
- && curl --remote-name --location --silent \
-      http://download.qt.io/archive/qt/${qt_major}/${qt_version}/single/md5sums.txt \
- \
+    python \
+    binutils \
+    xz \
+    glibc-devel \
+    bison \
+    flex \
+    make \
+    mesa-libGL-devel \
+    mesa-libEGL-devel \
+    openssl-devel \
+    fontconfig-devel \
+    dbus-devel \
+    libXcomposite-devel \
+    libXcursor-devel \
+    libxkbcommon-devel \
+    libxkbcommon-x11-devel \
+    libXi-devel \
+    libXrandr-devel \
+    libXtst-devel \
+    gperf \
+    expat-devel \
+    xkeyboard-config \
+    nss-devel \
+    devtoolset-8 \
+    patch \
+    xorg-x11-apps \      
+\
+&& echo "Downloading Qt5 ${qt_version}:" \
+&& curl --remote-name --location --progress-bar \
+    http://download.qt.io/archive/qt/${qt_major}/${qt_version}/single/${qt_string}-${qt_version}.tar.xz \
+&& curl --remote-name --location --silent \
+    http://download.qt.io/archive/qt/${qt_major}/${qt_version}/single/md5sums.txt \
+\
  && echo -n "Verifying file.. " \
  && sed --in-place '/.*\.zip/d' md5sums.txt \
  && md5sum --quiet --check md5sums.txt \
@@ -97,98 +97,98 @@ RUN yum -y install \
  &&    patch -d ${qt_string}-${qt_version} -p1 -i ${patch}; \
     done \
  && echo "done" \
- && source scl_source enable devtoolset-8 \
- && mkdir build \
- && cd build \
- && ../${qt_string}-${qt_version}/configure \
-      -opensource \
-      -confirm-license \
-      --prefix=${qt_prefix}/Qt-${qt_version}-$suffix/lib \
-      --libdir=${qt_prefix}/Qt-${qt_version}-$suffix/lib \
-      --bindir=${qt_prefix}/Qt-${qt_version}-$suffix/lib/bin \
-      --libexecdir=${qt_prefix}/Qt-${qt_version}-$suffix/lib/libexec \
-      --plugindir=${qt_prefix}/Qt-${qt_version}-$suffix/lib/plugins \
-      -shared \
-      -c++std c++14 \
-      -platform linux-g++-64 \
-      -${build_type} \
-      -no-pch \
-      -ssl \
-      -fontconfig \
-      -system-freetype \
-      -qt-zlib \
-      -qt-libjpeg \
-      -qt-libpng \
-      -qt-xcb \
-      -nomake examples \
-      -nomake tests \
-      -no-sse4.1 \
-      -no-sse4.2 \
-      -no-avx \
-      -no-avx2 \
-      -no-avx512 \
-      -no-rpath \
-      -no-dbus \
-      -no-cups \
-      -no-iconv \
-      -no-gtk \
-      -no-glib \
-      -no-icu \
-      -no-webrtc \
-      -no-pepper-plugins \
-      -no-spellchecker \
-      -no-printing-and-pdf \
-      -skip qt3d \
-      -skip qtactiveqt \
-      -skip qtandroidextras \
-      -skip qtcanvas3d \
-      -skip qtcharts \
-      -skip qtconnectivity \
-      -skip qtdatavis3d \
-      -skip qtgamepad \
-      -skip qtgraphicaleffects \
-      -skip qtimageformats \
-      -skip qtlocation \
-      -skip qtmacextras \
-      -skip qtmultimedia \
-      -skip qtnetworkauth \
-      -skip qtpurchasing \
-      -skip qtremoteobjects \
-      -skip qtsensors \
-      -skip qtserialbus \
-      -skip qtserialport \
-      -skip qtspeech \
-      -skip qttranslations \
-      -skip qtvirtualkeyboard \
-      -skip qtwayland \
-      -skip qtwebsockets \
-      -skip qtwinextras \ 
-# # Not skipping: qtbase
-# #               qtdeclarative
-# #               qtdoc
-# #               qtimageformats
-# #               qtquickcontrols  # required by qtwebengine
-# #               qtquickcontrols2
-# #               qtremoteobjects
-# #               qtscxml
-# #               qtscript
-# #               qtsvg
-# #               qttools
-# #               qtwebchannel     # required by qtwebengine
-# #               qtwebengine
-# #               qtwebview
-# #               qtx11extras
-# #               qtxmlpatterns
-#  \
-   && make --jobs=$(nproc) \
-   && make install
-
-###############################################################################
-# Final Image
-###############################################################################
-
-FROM base
-
-ARG qt_prefix
-
-COPY --from=builder ${qt_prefix} ${qt_prefix}
+#dock && source scl_source enable devtoolset-8 \
+#dock && mkdir build \
+#dock && cd build \
+#dock && ../${qt_string}-${qt_version}/configure \
+#dock      -opensource \
+#dock      -confirm-license \
+#dock      --prefix=${qt_prefix}/Qt-${qt_version}-$suffix/lib \
+#dock      --libdir=${qt_prefix}/Qt-${qt_version}-$suffix/lib \
+#dock      --bindir=${qt_prefix}/Qt-${qt_version}-$suffix/lib/bin \
+#dock      --libexecdir=${qt_prefix}/Qt-${qt_version}-$suffix/lib/libexec \
+#dock      --plugindir=${qt_prefix}/Qt-${qt_version}-$suffix/lib/plugins \
+#dock      -shared \
+#dock      -c++std c++14 \
+#dock      -platform linux-g++-64 \
+#dock      -${build_type} \
+#dock      -no-pch \
+#dock      -ssl \
+#dock      -fontconfig \
+#dock      -system-freetype \
+#dock      -qt-zlib \
+#dock      -qt-libjpeg \
+#dock      -qt-libpng \
+#dock      -qt-xcb \
+#dock      -nomake examples \
+#dock      -nomake tests \
+#dock      -no-sse4.1 \
+#dock      -no-sse4.2 \
+#dock      -no-avx \
+#dock      -no-avx2 \
+#dock      -no-avx512 \
+#dock      -no-rpath \
+#dock      -no-dbus \
+#dock      -no-cups \
+#dock      -no-iconv \
+#dock      -no-gtk \
+#dock      -no-glib \
+#dock      -no-icu \
+#dock      -no-webrtc \
+#dock      -no-pepper-plugins \
+#dock      -no-spellchecker \
+#dock      -no-printing-and-pdf \
+#dock      -skip qt3d \
+#dock      -skip qtactiveqt \
+#dock      -skip qtandroidextras \
+#dock      -skip qtcanvas3d \
+#dock      -skip qtcharts \
+#dock      -skip qtconnectivity \
+#dock      -skip qtdatavis3d \
+#dock      -skip qtgamepad \
+#dock      -skip qtgraphicaleffects \
+#dock      -skip qtimageformats \
+#dock      -skip qtlocation \
+#dock      -skip qtmacextras \
+#dock      -skip qtmultimedia \
+#dock      -skip qtnetworkauth \
+#dock      -skip qtpurchasing \
+#dock      -skip qtremoteobjects \
+#dock      -skip qtsensors \
+#dock      -skip qtserialbus \
+#dock      -skip qtserialport \
+#dock      -skip qtspeech \
+#dock      -skip qttranslations \
+#dock      -skip qtvirtualkeyboard \
+#dock      -skip qtwayland \
+#dock      -skip qtwebsockets \
+#dock      -skip qtwinextras \ 
+#dock# # Not skipping: qtbase
+#dock# #               qtdeclarative
+#dock# #               qtdoc
+#dock# #               qtimageformats
+#dock# #               qtquickcontrols  # required by qtwebengine
+#dock# #               qtquickcontrols2
+#dock# #               qtremoteobjects
+#dock# #               qtscxml
+#dock# #               qtscript
+#dock# #               qtsvg
+#dock# #               qttools
+#dock# #               qtwebchannel     # required by qtwebengine
+#dock# #               qtwebengine
+#dock# #               qtwebview
+#dock# #               qtx11extras
+#dock# #               qtxmlpatterns
+#dock#  \
+#dock   && make --jobs=$(nproc) \
+#dock   && make install
+#dock
+#dock###############################################################################
+#dock# Final Image
+#dock###############################################################################
+#dock
+#dockFROM base
+#dock
+#dockARG qt_prefix
+#dock
+#dockCOPY --from=builder ${qt_prefix} ${qt_prefix}
