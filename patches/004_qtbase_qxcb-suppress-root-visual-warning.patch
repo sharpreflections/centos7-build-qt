@@ -1,9 +1,9 @@
 Submodule qtbase 2e5ce799..51df0022:
 diff --git a/qtbase/src/plugins/platforms/xcb/qxcbwindow.cpp b/qtbase/src/plugins/platforms/xcb/qxcbwindow.cpp
-index a6d2054110..c9cc03dd1f 100644
+index a6d2054110..1a94058e1c 100644
 --- a/qtbase/src/plugins/platforms/xcb/qxcbwindow.cpp
 +++ b/qtbase/src/plugins/platforms/xcb/qxcbwindow.cpp
-@@ -312,8 +312,6 @@ void QXcbWindow::create()
+@@ -287,8 +287,6 @@ void QXcbWindow::create()
              visual = platformScreen->visualForId(connection()->defaultVisualId());
              if (visual)
                  m_visualId = connection()->defaultVisualId();
@@ -12,16 +12,11 @@ index a6d2054110..c9cc03dd1f 100644
          }
          if (!visual)
              visual = platformScreen->visualForId(m_visualId);
-@@ -378,7 +376,6 @@ void QXcbWindow::create()
+@@ -353,7 +351,6 @@ void QXcbWindow::create()
          visual = createVisual();
-
+ 
      if (!visual) {
 -        qWarning() << "Falling back to using screens root_visual.";
          visual = platformScreen->visualForId(platformScreen->screen()->root_visual);
      }
-
-@@ -2662,4 +2659,3 @@ QString QXcbWindow::windowTitle(const QXcbConnection *conn, xcb_window_t window)
- }
-
- QT_END_NAMESPACE
--
+ 

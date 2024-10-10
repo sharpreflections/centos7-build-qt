@@ -3,10 +3,10 @@ diff --git a/qtwebengine/src/core/api/core_api.pro b/qtwebengine/src/core/api/co
 index 4b69b348a..006d9acf8 100644
 --- a/qtwebengine/src/core/api/core_api.pro
 +++ b/qtwebengine/src/core/api/core_api.pro
-@@ -57,13 +57,6 @@ SOURCES = \
+@@ -59,13 +59,6 @@ SOURCES = \
      qwebengineurlscheme.cpp \
      qwebengineurlschemehandler.cpp
-
+ 
 -### Qt6 Remove this workaround
 -unix:!isEmpty(QMAKE_LFLAGS_VERSION_SCRIPT):!static {
 -    CONFIG -= warning_clean
