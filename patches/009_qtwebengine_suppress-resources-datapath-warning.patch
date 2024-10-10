@@ -3,7 +3,7 @@ diff --git a/qtwebengine/src/core/web_engine_library_info.cpp b/qtwebengine/src/
 index 75fd947a2..c8daef234 100644
 --- a/qtwebengine/src/core/web_engine_library_info.cpp
 +++ b/qtwebengine/src/core/web_engine_library_info.cpp
-@@ -298,15 +298,12 @@ QString resourcesDataPath()
+@@ -293,15 +293,12 @@ QString resourcesDataPath()
      if (!initialized) {
          initialized = true;
          if (!QFileInfo::exists(potentialResourcesPath % QLatin1String("/qtwebengine_resources.pak"))) {
