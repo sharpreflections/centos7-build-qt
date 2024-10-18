@@ -15,7 +15,7 @@ ARG build_type=release
 # Base Image
 ###############################################################################
 
-FROM quay.io/centos/centos:centos7 as base
+FROM quay.io/centos/centos:centos7 AS base
 
 ARG gcc
 ARG qt_major
@@ -30,7 +30,7 @@ ARG build_type
 # Builder Image
 ###############################################################################
 
-FROM quay.io/sharpreflections/centos7-build-base as builder
+FROM quay.io/sharpreflections/centos7-build-base AS builder
 
 ARG gcc
 ARG qt_major
@@ -96,7 +96,12 @@ RUN yum -y install \
     do echo "-- Apply $(basename ${patch})." \
  &&    patch -d ${qt_string}-${qt_version} -p1 -i ${patch}; \
     done \
- && echo "done" \
+ && echo "patching done" \
+ \
+ && echo "Creating patched sources" \
+ && tar -czf ${qt_string}-${qt_version}_patched.tar.xz ${qt_string}-${qt_version}\
+ && echo "Creating patched sources done: ${qt_string}-${qt_version}_patched.tar.xz"\
+ \
  && source scl_source enable devtoolset-8 \
  && mkdir build \
  && cd build \
