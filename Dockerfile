@@ -68,6 +68,7 @@ RUN yum -y install \
       libXi-devel \
       libXrandr-devel \
       libXtst-devel \
+      libicu-devel \
       gperf \
       expat-devel \
       xkeyboard-config \
